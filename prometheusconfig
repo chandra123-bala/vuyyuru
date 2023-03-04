@@ -1,0 +1,23 @@
+part-3
+#create docker-compose yml for both csvserver, promithious services
+we have updated docker-compose.yml
+#brouser http://3.86.186.48:9393 for csvserver and brouser http://3.86.186.48:9090 for promithious
+#configure promithious
+#for that go to promithous container
+docker exec -it container_id /bin/sh
+#go to /etc/promithious
+vi /promithious.yml
+here i added below configuration 
+- job_name: 'csvserver_records'
+  static_configs:
+    - targets: ['3.86.186.48:9393']
+	
+#then exit to come back to main terminal
+#stop promithious container with below command
+docker stop container container_id
+#restart start the promithious container
+docker start container container_id
+#go to brouser refresh promithious
+enter csvserver_records query box of Prometheus, Click on Execute and then switch to the Graph tab
+
+it should show a straight line graph with value 7
